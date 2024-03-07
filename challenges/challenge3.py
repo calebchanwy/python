@@ -18,12 +18,26 @@ class SalesItem:
 
 def CalculateBestBranch(sales):
 
-    branchSales = {}
+  branchSales = {}
+  
+  # Iterate through each sale in sales
+  for sale in sales:
+    branch = sale.branch
+    
+    # If the branch name is not found within the keys of branchSales, add to dictionairy
+    if branch not in branchSales:
+      branchSales[branch] = sale.totalSales
+      
+    # If the branch is found within the keys of branchSales, add to sales
+    else:
+      branchSales[branch] += sale.totalSales
+  
+  # Using sorted in built method to sort dictionairy by the values in descending order
+  sortedBranchSales = sorted(branchSales.items(), key=lambda x:x[1], reverse=True)
+  
+  # Return the first value in the sorted list
+  return sortedBranchSales[0][0]
+  
+    
 
-    # Implement your code here
-    raise NotImplementedError
 
-    # order your dictionary by value
-    # get key of first item
-
-    return "FOO"
