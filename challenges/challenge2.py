@@ -11,8 +11,14 @@ import sys
 
 
 def ReturnSmallestValueInArray(numbers):
-    min = -sys.maxsize-1
+    # Bug 1: When given an empty array of numbers, falsely returns a number
+    if len(numbers) == 0:
+        return 0
+    # Bug 2: Initial value of min should be set to maximum, not minimum
+    min = sys.maxsize
     for i in range(len(numbers)):
-        if min < numbers[i]:
+        # Bug 3: Wrong operator used/wrong direction of comparison
+        if min > numbers[i]:
             min = numbers[i]
-    return 1
+    # Bug 4: Always returned value 1, but should return value at min
+    return min
