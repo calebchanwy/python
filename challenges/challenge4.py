@@ -22,28 +22,43 @@ import math
 
 def StampDuty(propertyPrice):
     
+    # The below can be improved by using enums instead of hard-coding
+    # However, I was not too sure if I could import enums for the test or not
+    # so I refrained from using them, but used local vars instead
+    
+    FIRST_THRESHOLD = 300001
+    SECOND_THRESHOLD = 925001
+    THIRD_THRESHOLD = 1500001
+    
+    # This dictionairy maps minimum thresholds to tax rates
+    rates = {
+        FIRST_THRESHOLD : 0.05,
+        SECOND_THRESHOLD : 0.1,
+        THIRD_THRESHOLD : 0.12,
+    }
+    
     # Property price below any threshold, (0%)
-    if propertyPrice <= 300001:
+    if propertyPrice <= FIRST_THRESHOLD:
         return 0
     
     startingValueForTax = propertyPrice
     tax = 0
 
     # Property price at £1,500,000 threshold (12%)
-    if startingValueForTax > 1500000:
-        tax += (startingValueForTax - 1500001)*0.12
+    if startingValueForTax >= THIRD_THRESHOLD:
+        tax += (startingValueForTax - THIRD_THRESHOLD)*rates[THIRD_THRESHOLD]
         # Set value at maximum for next calculation
-        startingValueForTax = 1500000
+        startingValueForTax = THIRD_THRESHOLD -1
 
     # Property price at £925,000 threshold (10%)
-    if startingValueForTax > 925000:
-        tax += (startingValueForTax - 925001)*0.10
+    if startingValueForTax >= SECOND_THRESHOLD:
+        tax += (startingValueForTax - SECOND_THRESHOLD)*rates[SECOND_THRESHOLD]
         # Set value at maximum for next calculation
-        startingValueForTax = 925000
+        startingValueForTax = SECOND_THRESHOLD -1
         
     # Property price at £300,000 threshold (5%)
-    if startingValueForTax > 300000:
-        tax += (startingValueForTax - 300001)*0.05
+    if startingValueForTax >= FIRST_THRESHOLD:
+        tax += (startingValueForTax - FIRST_THRESHOLD)*rates[FIRST_THRESHOLD]
 
     # Return final tax rounded nearest integer
     return round(tax, 0)
