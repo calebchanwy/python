@@ -21,18 +21,29 @@ import math
 
 
 def StampDuty(propertyPrice):
+    
+    # Property price below any threshold, (0%)
     if propertyPrice <= 300001:
         return 0
+    
     startingValueForTax = propertyPrice
     tax = 0
 
+    # Property price at £1,500,000 threshold (12%)
     if startingValueForTax > 1500000:
-        raise NotImplementedError
+        tax += (startingValueForTax - 1500001)*0.12
+        # Set value at maximum for next calculation
+        startingValueForTax = 1500000
 
+    # Property price at £925,000 threshold (10%)
     if startingValueForTax > 925000:
-        raise NotImplementedError
-
+        tax += (startingValueForTax - 925001)*0.10
+        # Set value at maximum for next calculation
+        startingValueForTax = 925000
+        
+    # Property price at £300,000 threshold (5%)
     if startingValueForTax > 300000:
-        raise NotImplementedError
+        tax += (startingValueForTax - 300001)*0.05
 
+    # Return final tax rounded nearest integer
     return round(tax, 0)
