@@ -18,6 +18,10 @@ class SalesItem:
 
 def CalculateBestBranch(sales):
 
+  # Check if empty list
+  if len(sales) == 0:
+    return
+
   branchSales = {}
   
   # Iterate through each sale in sales
